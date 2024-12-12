@@ -17,7 +17,6 @@ const initialState: MessagesState = {
 
 export const selectMessages = (state: RootState) => state.messages.messages;
 export const selectFetchLoading = (state: RootState) => state.messages.fetchLoading;
-export const selectCreateLoading = (state: RootState) => state.messages.createLoading;
 
 const messagesSlice = createSlice({
   name: 'messages',
@@ -38,11 +37,13 @@ const messagesSlice = createSlice({
       .addCase(createMessage.pending, (state) => {
         state.createLoading = true;
       })
-      .addCase(createMessage.fulfilled, (state) => {
+      .addCase(createMessage.fulfilled, (state, {payload}) => {
         state.createLoading = false;
+        state.messages.push(payload);
       })
       .addCase(createMessage.rejected, (state) => {
         state.createLoading = false;
+
       });
   }
 

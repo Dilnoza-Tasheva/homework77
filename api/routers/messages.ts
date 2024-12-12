@@ -18,7 +18,7 @@ messagesRouter.post('/', imagesUpload.single('image'), async (req, res) => {
     const oneMessage: MessageWithoutID = {
         author: req.body.author || 'Anonymous',
         message: req.body.message,
-        image: req.file ? 'images' + req.file.filename : null,
+        image: req.file ? `/images${req.file.filename}` : null,
     };
 
     const savedMessages = await fileDb.addMessage(oneMessage);

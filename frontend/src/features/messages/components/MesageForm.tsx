@@ -3,9 +3,8 @@ import { Button, TextField } from '@mui/material';
 import FileInput from '../../../components/FileInput/FileInput.tsx';
 import { MessageMutation } from '../../../app/types';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
+import { useAppDispatch} from '../../../app/hooks.ts';
 import { createMessage } from '../messagesThunks.ts';
-import { selectCreateLoading } from '../messagesSlice.ts';
 
 const initialState = {
   author: '',
@@ -15,12 +14,12 @@ const initialState = {
 
 const MessageForm = () => {
   const dispatch = useAppDispatch();
-  const createLoading = useAppSelector(selectCreateLoading);
   const [form, setForm] = useState<MessageMutation>(initialState);
 
   const submitForm = async (e: FormEvent) => {
     e.preventDefault();
     dispatch(createMessage(form));
+    setForm(initialState);
   };
 
   const inputOnChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +69,7 @@ const MessageForm = () => {
         </Grid>
 
         <Grid>
-          <Button color="primary" type="submit" disabled={createLoading}>
+          <Button color="primary" type="submit">
             Send
           </Button>
         </Grid>

@@ -10,7 +10,7 @@ export const fetchMessages = createAsyncThunk<Message[], void>(
   }
 );
 
-export const createMessage = createAsyncThunk<void, MessageMutation>(
+export const createMessage = createAsyncThunk<Message, MessageMutation>(
   'messages/createMessage',
   async (messageMutation) => {
     const formData = new FormData();
@@ -24,6 +24,7 @@ export const createMessage = createAsyncThunk<void, MessageMutation>(
       }
     });
 
-    await axiosApi.post('/messages', formData)
+     const response = await axiosApi.post('/messages', formData)
+    return response.data as Message;
   }
 );
